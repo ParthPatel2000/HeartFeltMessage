@@ -1,8 +1,8 @@
 // import { useState } from 'react'
 import './App.css'
-// import Editor from './Components/Editor'
 import { useLocation } from 'react-router-dom'
-// import Viewer from './Components/Viewer';
+import Editor from './components/Editor'
+import Viewer from './components/Viewer';
 
 function App() {
 
@@ -13,11 +13,11 @@ function App() {
         {
           pathname.length > 1 ?
             <div>
-              Viewer Mode
+              <Viewer />
             </div>
             :
             <div>
-              Editor Mode
+              <Editor />
             </div>
         }
 
