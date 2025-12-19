@@ -9,9 +9,16 @@ export type MessagePayload = {
   images?: string[];        // Optional array of public image URLs
 };
 
+
 export type Theme = {
   name: string;
-  background: string;       // Can be color or gradient
-  textColor: string;
-  accentColor?: string;
+  background: string;          // page/card background
+  textColor: string;           // default text color
+  placeholderColor?: string;   // optional placeholder color
+  fontFamily?: string;         // font for this theme
+  borderColor?: string;        // input/select borders
+  buttonBackground?: string;   // buttons
+  buttonTextColor?: string;    
+  accentColor?: string;        // highlights, links, etc.
 };
+

@@ -1,11 +1,10 @@
-import React from 'react'
+
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { themes } from '@/utils/themes';
-import type { Theme } from '@/types';
 import type { RootState } from '@/store/store';
 import { changeTheme } from '@/store/themeState/themeSlice';
 
@@ -17,63 +16,110 @@ const Editor = () => {
     const dispatch = useDispatch();
 
     return (
-        <div className='page'
+        <div
+            className="page"
             style={{
                 background: selectedTheme.background,
                 color: selectedTheme.textColor,
+                fontFamily: selectedTheme.fontFamily,
             }}
         >
-            <div className='card'
+            <div
+                className="card"
                 style={{
                     background: selectedTheme.background,
                     color: selectedTheme.textColor,
-                }}>
+                }}
+            >
+                {/* Theme Selector */}
                 <div>
                     <Select
-
                         value={selectedTheme.name}
                         onValueChange={(value) => {
-                            dispatch(changeTheme(value))
-
+                            dispatch(changeTheme(value));
                         }}
                     >
-                        <SelectTrigger className='select-trigger'>
-                            <SelectValue placeholder={selectedTheme.name} />
+                        <SelectTrigger
+                            className="select-trigger"
+                            style={{
+                                borderColor: selectedTheme.borderColor,
+                                color: selectedTheme.textColor,
+                            }}
+                        >
+                            <SelectValue
+                                placeholder={selectedTheme.name}
+                                style={{ color: selectedTheme.textColor }}
+                            />
                         </SelectTrigger>
-                        <SelectContent className='select-content'>
-                            {
-                                themes.map((theme) => (<SelectItem className="select-item" value={theme.name}> {theme.name}</SelectItem>))
-                            }
+                        <SelectContent
+                            className="select-content"
+                            style={{ borderColor: selectedTheme.borderColor }}
+                        >
+                            {themes.map((theme) => (
+                                <SelectItem
+                                    key={theme.name}
+                                    value={theme.name}
+                                    className="select-item"
+                                    style={{
+                                        color: theme.textColor,
+                                        background: theme.background,
+                                    }}
+                                >
+                                    {theme.name}
+                                </SelectItem>
+                            ))}
                         </SelectContent>
                     </Select>
                 </div>
+
+                {/* Title Input */}
                 <div>
                     <Input
                         key={selectedTheme.name}
-                        type='text'
+                        type="text"
                         value={tile}
-                        placeholder='Title'
-                        className='input'
-                        onChange={(e) => { setTitle(e.target.value) }
-                        }>
+                        placeholder="Title"
+                        className="input"
+                        style={{
+                            color: selectedTheme.textColor,
+                            borderColor: selectedTheme.borderColor,
+                        }}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+                </div>
 
-                    </Input>
+                {/* Message Textarea */}
+                <div className="relative">
+                    <Textarea
+                        key={selectedTheme.name + "-body"}
+                        value={body}
+                        placeholder="Message"
+                        onChange={(e) => setBody(e.target.value)}
+                        className="input h-34 pr-8 resize-none"
+                        style={{
+                            color: selectedTheme.textColor,
+                            borderColor: selectedTheme.borderColor,
+                        }}
+                    />
+                    {/* Bottom-right character count */}
+                    <span
+                        className="char-counter"
+                        style={{ color: selectedTheme.textColor }}
+                    >
+                        {size - (body.length + tile.length)}
+                    </span>
                 </div>
-                <div className="relative ">
-                    <div className="relative">
-                        <Textarea
-                            key={selectedTheme.name}
-                            value={body}
-                            placeholder="Message"
-                            onChange={(e) => setBody(e.target.value)}
-                            className="input h-34 pr-8 resize-none" // `resize-none` optional to prevent resizing
-                        />
-                        {/* Bottom-right character count */}
-                        <span className="char-counter">
-                            {size - (body.length + tile.length)}
-                        </span>
-                    </div>
-                </div>
+
+                {/* Optional: example button using accentColor */}
+                <button
+                    className="mt-4 px-4 py-2 rounded"
+                    style={{
+                        backgroundColor: selectedTheme.accentColor,
+                        color: selectedTheme.buttonTextColor || "#fff",
+                    }}
+                >
+                    Send
+                </button>
             </div>
         </div>
     )
