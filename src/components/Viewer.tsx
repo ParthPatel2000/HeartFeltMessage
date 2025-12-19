@@ -3,11 +3,14 @@ import type { MessagePayload } from "@/types"
 import { useLocation } from "react-router-dom"
 import { decodeMessage } from "@/utils/encode_decode"
 import { themes } from "@/utils/themes"
+import { useDispatch } from "react-redux"
+import { changeTheme } from "@/store/themeState/themeSlice"
 
 const Viewer = () => {
     const [payload, setPayload] = useState<MessagePayload | null>(null)
     const currentUrl = useLocation();
     const text = currentUrl.pathname.replace(/^\/+/, "");
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setPayload(decodeMessage(text));
@@ -16,15 +19,12 @@ const Viewer = () => {
     if (!payload) return null;
 
     const theme =
-        themes.find(t => t.name === payload.theme) ?? themes[0]
+        themes.find(t => t.value === payload.theme) ?? themes[0]
+    dispatch(changeTheme(theme.value));
 
     return (
-        <div className="page" style={{ background: theme.background, color: theme.textColor, fontFamily: theme.fontFamily }}>
-            <article className="card" style={{
-                background: theme.background,
-                color: theme.textColor,
-                borderColor: theme.borderColor
-            }}>
+        <div className="page">
+            <article className="card">
                 <h1 className="text-2xl sm:text-3xl font-semibold mb-4 break-words">
                     {payload.title}
                 </h1>

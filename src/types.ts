@@ -15,3 +15,11 @@ export type Theme = {
   value: string;
 };
 
+export type ThemeName =
+  | "apology"
+  | "regret"
+  | "confession"
+  | "bold-love"
+  | "playful"
+  | "chaos";
+

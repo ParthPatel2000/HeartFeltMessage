@@ -5,9 +5,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { themes } from '@/utils/themes';
-import { changeTheme, type ThemeName } from '@/store/themeState/themeSlice';
+import { changeTheme} from '@/store/themeState/themeSlice';
+import type { ThemeName } from "@/types";
 import type { RootState } from "@/store/store";
-// import GenerateLink from "./GenerateLink";
+import GenerateLink from "./GenerateLink";
 
 const Editor = () => {
     const [title, setTitle] = useState<string>("");
@@ -97,8 +98,8 @@ const Editor = () => {
             {showLink &&
                 <div className="card"
                 >
-                    PlaceHolder for Generate Link.
-                    {/* <GenerateLink title={title} body={body} /> */}
+                    {/* PlaceHolder for Generate Link. */}
+                    <GenerateLink title={title} body={body} />
                 </div>
             }
 

@@ -1,12 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-export type ThemeName =
-  | "apology"
-  | "regret"
-  | "confession"
-  | "bold-love"
-  | "playful"
-  | "chaos";
+import type { ThemeName } from "@/types";
 
 const initialState = "playful";
 
