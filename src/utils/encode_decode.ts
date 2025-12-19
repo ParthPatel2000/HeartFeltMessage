@@ -1,3 +1,4 @@
+// ./src/utils/encode_decode.ts
 import LZString from 'lz-string';
 import type { MessagePayload } from '../types';
 
@@ -10,6 +11,7 @@ export const decodeMessage = (encoded: string): MessagePayload | null => {
   try {
     const json = LZString.decompressFromEncodedURIComponent(encoded);
     if (!json) return null;
+    console.log(json)
     return JSON.parse(json);
   } catch (e) {
     console.error('Failed to decode message:', e);

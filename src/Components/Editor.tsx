@@ -7,10 +7,12 @@ import { useState } from 'react';
 import { themes } from '@/utils/themes';
 import type { RootState } from '@/store/store';
 import { changeTheme } from '@/store/themeState/themeSlice';
+import GenerateLink from "./GenerateLink";
 
 const Editor = () => {
-    const [tile, setTitle] = useState<string>("");
+    const [title, setTitle] = useState<string>("");
     const [body, setBody] = useState<string>("");
+    const [showLink, setShowLink] = useState<boolean>(false);
     const size = 8000;
     const selectedTheme = useSelector((state: RootState) => state.theme);
     const dispatch = useDispatch();
@@ -77,7 +79,7 @@ const Editor = () => {
                     <Input
                         key={selectedTheme.name}
                         type="text"
-                        value={tile}
+                        value={title}
                         placeholder="Title"
                         className="input"
                         style={{
@@ -106,21 +108,34 @@ const Editor = () => {
                         className="char-counter"
                         style={{ color: selectedTheme.textColor }}
                     >
-                        {size - (body.length + tile.length)}
+                        {size - (body.length + title.length)}
                     </span>
                 </div>
 
                 {/* Optional: example button using accentColor */}
                 <button
-                    className="mt-4 px-4 py-2 rounded"
-                    style={{
-                        backgroundColor: selectedTheme.accentColor,
-                        color: selectedTheme.buttonTextColor || "#fff",
-                    }}
+                    className={
+                        `mt-4 px-4 py-2 rounded 
+                        ${showLink ? "bg-blue-500 border-2 border-blue-700" : "bg-red-500"}
+                         text-white`}
+                    onClick={() => setShowLink(!showLink)}
                 >
-                    Send
+                    Generate
                 </button>
             </div>
+
+            {showLink &&
+                <div className="card"
+                style={{
+                    background: selectedTheme.background,
+                    color: selectedTheme.textColor,
+                }}
+                >
+                    <GenerateLink title={title} body={body} />
+                </div>
+            }
+
+
         </div>
     )
 }
