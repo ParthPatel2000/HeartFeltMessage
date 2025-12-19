@@ -11,14 +11,7 @@ export type MessagePayload = {
 
 
 export type Theme = {
-  name: string;
-  background: string;          // page/card background
-  textColor: string;           // default text color
-  placeholderColor?: string;   // optional placeholder color
-  fontFamily?: string;         // font for this theme
-  borderColor?: string;        // input/select borders
-  buttonBackground?: string;   // buttons
-  buttonTextColor?: string;    
-  accentColor?: string;        // highlights, links, etc.
+  label: string;
+  value: string;
 };
 

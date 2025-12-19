@@ -5,69 +5,45 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { themes } from '@/utils/themes';
-import type { RootState } from '@/store/store';
-import { changeTheme } from '@/store/themeState/themeSlice';
-import GenerateLink from "./GenerateLink";
+import { changeTheme, type ThemeName } from '@/store/themeState/themeSlice';
+import type { RootState } from "@/store/store";
+// import GenerateLink from "./GenerateLink";
 
 const Editor = () => {
     const [title, setTitle] = useState<string>("");
     const [body, setBody] = useState<string>("");
     const [showLink, setShowLink] = useState<boolean>(false);
     const size = 8000;
-    const selectedTheme = useSelector((state: RootState) => state.theme);
+    const theme = useSelector((state: RootState) => state.theme)
     const dispatch = useDispatch();
 
     return (
-        <div
-            className="page"
-            style={{
-                background: selectedTheme.background,
-                color: selectedTheme.textColor,
-                fontFamily: selectedTheme.fontFamily,
-            }}
-        >
-            <div
-                className="card"
-                style={{
-                    background: selectedTheme.background,
-                    color: selectedTheme.textColor,
-                }}
-            >
+        <div className="page">
+            <div className="card">
                 {/* Theme Selector */}
                 <div>
                     <Select
-                        value={selectedTheme.name}
-                        onValueChange={(value) => {
+                        onValueChange={(value: ThemeName) => {
                             dispatch(changeTheme(value));
-                        }}
-                    >
+                        }}>
+
                         <SelectTrigger
-                            className="select-trigger"
-                            style={{
-                                borderColor: selectedTheme.borderColor,
-                                color: selectedTheme.textColor,
-                            }}
-                        >
+                            className="select-trigger">
                             <SelectValue
-                                placeholder={selectedTheme.name}
-                                style={{ color: selectedTheme.textColor }}
+                                placeholder={theme}
                             />
                         </SelectTrigger>
                         <SelectContent
                             className="select-content"
-                            style={{ borderColor: selectedTheme.borderColor }}
+
                         >
                             {themes.map((theme) => (
                                 <SelectItem
-                                    key={theme.name}
-                                    value={theme.name}
+                                    key={theme.value}
+                                    value={theme.value}
                                     className="select-item"
-                                    style={{
-                                        color: theme.textColor,
-                                        background: theme.background,
-                                    }}
                                 >
-                                    {theme.name}
+                                    {theme.label}
                                 </SelectItem>
                             ))}
                         </SelectContent>
@@ -77,15 +53,12 @@ const Editor = () => {
                 {/* Title Input */}
                 <div>
                     <Input
-                        key={selectedTheme.name}
+
                         type="text"
                         value={title}
                         placeholder="Title"
                         className="input"
-                        style={{
-                            color: selectedTheme.textColor,
-                            borderColor: selectedTheme.borderColor,
-                        }}
+
                         onChange={(e) => setTitle(e.target.value)}
                     />
                 </div>
@@ -93,20 +66,17 @@ const Editor = () => {
                 {/* Message Textarea */}
                 <div className="relative">
                     <Textarea
-                        key={selectedTheme.name + "-body"}
+
                         value={body}
                         placeholder="Message"
                         onChange={(e) => setBody(e.target.value)}
                         className="input h-34 pr-8 resize-none"
-                        style={{
-                            color: selectedTheme.textColor,
-                            borderColor: selectedTheme.borderColor,
-                        }}
+
                     />
                     {/* Bottom-right character count */}
                     <span
                         className="char-counter"
-                        style={{ color: selectedTheme.textColor }}
+
                     >
                         {size - (body.length + title.length)}
                     </span>
@@ -126,12 +96,9 @@ const Editor = () => {
 
             {showLink &&
                 <div className="card"
-                style={{
-                    background: selectedTheme.background,
-                    color: selectedTheme.textColor,
-                }}
                 >
-                    <GenerateLink title={title} body={body} />
+                    PlaceHolder for Generate Link.
+                    {/* <GenerateLink title={title} body={body} /> */}
                 </div>
             }
 

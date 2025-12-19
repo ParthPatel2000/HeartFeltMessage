@@ -1,27 +1,47 @@
 @import "tailwindcss";
-/* Base page */
+
+/* =========================
+   BASE STYLING
+   ========================= */
+
+/* Page */
 .page {
-  @apply min-h-screen flex flex-col gap-2 items-center justify-center bg-gray-50 font-sans;
+  @apply min-h-screen flex flex-col gap-2 items-center justify-center font-sans;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  transition: background 0.5s ease, color 0.3s ease;
 }
 
 /* Card / editor container */
 .card {
-  @apply w-full max-w-md bg-white shadow-md rounded-lg p-6 flex flex-col gap-4;
+  @apply w-full max-w-md shadow-md rounded-lg p-6 flex flex-col gap-4;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  transition: background 0.5s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Input / Textarea common styles */
-.input {
-  @apply w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500;
-}
-
-/* Select trigger */
+/* Input / Textarea / Select */
+.input,
 .select-trigger {
-  @apply w-full border border-gray-300 rounded px-3 py-2 text-left focus:outline-none focus:ring-2 focus:ring-blue-500;
+  @apply w-full rounded px-3 py-2 focus:outline-none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: var(--input-bg, transparent);
+  /* dynamic focus ring using CSS variable */
+  --tw-ring-color: var(--accent);
+}
+.input:focus,
+.select-trigger:focus {
+  @apply ring-2 ring-offset-0;
 }
 
 /* Select dropdown content */
 .select-content {
-  @apply bg-white border border-gray-300 rounded shadow-lg;
+  @apply rounded shadow-lg;
+  border: 1px solid var(--border);
+  background: var(--bg);
 }
 
 /* Select items */
@@ -29,7 +49,114 @@
   @apply hover:bg-blue-100 rounded px-2 py-1;
 }
 
+/* Button */
+button {
+  @apply px-4 py-2 rounded;
+  background: var(--button-bg);
+  color: var(--button-text);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+  filter: brightness(0.95);
+}
+
 /* Character counter */
 .char-counter {
-  @apply absolute bottom-2 right-2 text-gray-400 text-sm;
+  @apply absolute bottom-2 right-2 text-sm;
+  color: var(--placeholder);
+}
+
+/* =========================
+   THEME VARIABLES
+   ========================= */
+
+:root {
+  --bg: #ffffff;
+  --text: #111827;
+  --placeholder: #6b7280;
+  --font: ui-sans-serif, system-ui;
+  --border: #d1d5db;
+  --button-bg: #3b82f6;
+  --button-text: #ffffff;
+  --accent: #2563eb;
+  --input-bg: transparent;
+}
+
+/* Apology */
+:root[data-theme="apology"] {
+  --bg: linear-gradient(180deg, #f8fafc, #e5e7eb);
+  --text: #1f2937;
+  --placeholder: #6b7280;
+  --font: 'Georgia', serif;
+  --border: #d1d5db;
+  --button-bg: #64748b;
+  --button-text: #ffffff;
+  --accent: #475569;
+  --input-bg: transparent;
+}
+
+/* Regret */
+:root[data-theme="regret"] {
+  --bg: linear-gradient(180deg, #0f172a, #1e293b);
+  --text: #e5e7eb;
+  --placeholder: #9ca3af;
+  --font: 'Times New Roman', serif;
+  --border: #334155;
+  --button-bg: #475569;
+  --button-text: #ffffff;
+  --accent: #94a3b8;
+  --input-bg: transparent;
+}
+
+/* Confession */
+:root[data-theme="confession"] {
+  --bg: linear-gradient(135deg, #fde2e4, #fbcfe8);
+  --text: #4a044e;
+  --placeholder: #9d174d;
+  --font: 'Playfair Display', serif;
+  --border: #f9a8d4;
+  --button-bg: #db2777;
+  --button-text: #ffffff;
+  --accent: #be185d;
+  --input-bg: transparent;
+}
+
+/* Bold Love */
+:root[data-theme="bold-love"] {
+  --bg: linear-gradient(135deg, #ff6a88, #ff99ac);
+  --text: #2b0a12;
+  --placeholder: #7f1d1d;
+  --font: 'Great Vibes', cursive;
+  --border: #fb7185;
+  --button-bg: #be123c;
+  --button-text: #ffffff;
+  --accent: #9f1239;
+  --input-bg: transparent;
+}
+
+/* Playful */
+:root[data-theme="playful"] {
+  --bg: linear-gradient(135deg, #fef3c7, #fde68a);
+  --text: #78350f;
+  --placeholder: #a16207;
+  --font: 'Comic Neue', cursive;
+  --border: #facc15;
+  --button-bg: #f59e0b;
+  --button-text: #000000;
+  --accent: #d97706;
+  --input-bg: transparent;
+}
+
+/* Chaos */
+:root[data-theme="chaos"] {
+  --bg: linear-gradient(135deg, #a78bfa, #f472b6);
+  --text: #1f2937;
+  --placeholder: #374151;
+  --font: 'Poppins', sans-serif;
+  --border: #c084fc;
+  --button-bg: #9333ea;
+  --button-text: #ffffff;
+  --accent: #ec4899;
+  --input-bg: transparent;
 }
