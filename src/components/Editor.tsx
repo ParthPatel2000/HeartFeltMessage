@@ -3,20 +3,41 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { themes } from '@/utils/themes';
-import { changeTheme} from '@/store/themeState/themeSlice';
-import type { ThemeName } from "@/types";
+import { changeTheme } from '@/store/themeState/themeSlice';
+import type { ThemeName, Music } from "@/types";
 import type { RootState } from "@/store/store";
 import GenerateLink from "./GenerateLink";
+import MusicSelector from "./MusicSelector";
 
 const Editor = () => {
     const [title, setTitle] = useState<string>("");
     const [body, setBody] = useState<string>("");
     const [showLink, setShowLink] = useState<boolean>(false);
+    const [music, setMusic] = useState<Music | null>(null);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
     const size = 8000;
     const theme = useSelector((state: RootState) => state.theme)
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (!music) return
+
+        if (audioRef.current) {
+            audioRef.current.pause()
+        }
+
+        audioRef.current = new Audio(music.url)
+        audioRef.current.volume = 0.6
+        audioRef.current.loop = true
+        audioRef.current.play()
+
+        return () => {
+            audioRef.current?.pause()
+        }
+    }, [music])
+
 
     return (
         <div className="page">
@@ -50,6 +71,7 @@ const Editor = () => {
                         </SelectContent>
                     </Select>
                 </div>
+                <MusicSelector value={music} onChange={setMusic} />
 
                 {/* Title Input */}
                 <div>

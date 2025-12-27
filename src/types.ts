@@ -9,6 +9,11 @@ export type MessagePayload = {
   images?: string[];        // Optional array of public image URLs
 };
 
+export type Music = {
+  id: string;
+  title: string;
+  url: string;
+}
 
 export type Theme = {
   label: string;
