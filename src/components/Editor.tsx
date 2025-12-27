@@ -2,6 +2,7 @@
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Volume2, VolumeX } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { themes } from '@/utils/themes';
@@ -16,8 +17,10 @@ const Editor = () => {
     const [body, setBody] = useState<string>("");
     const [showLink, setShowLink] = useState<boolean>(false);
     const [music, setMusic] = useState<Music | null>(null);
+    const [isMuted, setIsMuted] = useState<boolean>(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const size = 8000;
+    const volume = 0.6;
     const theme = useSelector((state: RootState) => state.theme)
     const dispatch = useDispatch();
 
@@ -29,7 +32,7 @@ const Editor = () => {
         }
 
         audioRef.current = new Audio(music.url)
-        audioRef.current.volume = 0.6
+        audioRef.current.volume = volume;
         audioRef.current.loop = true
         audioRef.current.play()
 
@@ -38,6 +41,12 @@ const Editor = () => {
         }
     }, [music])
 
+    const handleMuteUmute = () => {
+        setIsMuted(!isMuted)
+        if (audioRef.current) {
+            audioRef.current.volume = isMuted ? 0 : volume;
+        }
+    }
 
     return (
         <div className="page">
@@ -71,7 +80,15 @@ const Editor = () => {
                         </SelectContent>
                     </Select>
                 </div>
-                <MusicSelector value={music} onChange={setMusic} />
+                <div className="flex gap-2">
+                    <MusicSelector value={music} onChange={setMusic} />
+                    <button
+                        className="button"
+                        title={`${isMuted ? "mute" : "unmute"}`}
+                        onClick={() => { handleMuteUmute() }}>
+                        {isMuted ? <Volume2 size={20} /> : <VolumeX size={20} />}
+                    </button>
+                </div>
 
                 {/* Title Input */}
                 <div>

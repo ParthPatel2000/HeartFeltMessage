@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import type { Music } from '@/types'
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 
@@ -35,7 +36,6 @@ const MusicSelector = ({ value, onChange }: { value: Music | null, onChange: (ne
             <SelectTrigger className="select-trigger">
                 <SelectValue placeholder="Select Music" />
             </SelectTrigger>
-
             <SelectContent
                 className="select-content">
                 <SelectItem key={"none"} value={"none"}
